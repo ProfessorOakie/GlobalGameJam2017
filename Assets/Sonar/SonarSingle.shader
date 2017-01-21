@@ -1,7 +1,7 @@
 ﻿// GlowOnTouch scripts and shaders were written by Drew Okenfuss.
 // Any object with this shader must have the GlowOnTouchSingle.cs script on it.
 
-Shader "Custom/Sonar" {
+Shader "Custom/Sonar_Single" {
 	Properties{
 		_Color("Color", Color) = (1,1,1,1)
 		_MainTex("Albedo (RGB)", 2D) = "white" {}
