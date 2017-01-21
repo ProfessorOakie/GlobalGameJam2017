@@ -50,6 +50,7 @@ namespace NewtonVR
 
                 NVRCollisionSoundController.Play(this.Material, collision.contacts[0].point, volume);
                 NVRCollisionSoundController.Play(collisionSoundObject.Material, collision.contacts[0].point, volume);
+                SonarParent.instance.StartScan(collision.contacts[0].point, volume * 2.0f);
             }
         }
 
