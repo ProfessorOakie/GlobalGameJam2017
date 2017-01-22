@@ -5,7 +5,7 @@ using UnityEngine;
 public class RestirctCameraYMovement : MonoBehaviour {
     GameObject cameraRig;
     public int minY = 0;
-    public int maxY = 1;
+    public float maxY = 0.5f;
 	// Use this for initialization
 	void Start () {
         cameraRig = GameObject.FindWithTag("camera");   //Find the game object in the scene whose tag is "Ball".
