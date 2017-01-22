@@ -32,6 +32,8 @@ public class Monster : MonoBehaviour {
     private float flipToStage2 = 10.0f;
     private float flipToStage3 = 15.0f;
 
+    public float testSpeed = -1;
+
 	void Start () {
 
         // Singleton logic
@@ -53,6 +55,7 @@ public class Monster : MonoBehaviour {
             targetPriority *= 0.99f;
 
             agitationValue -= Time.deltaTime * 0.7f;
+            CheckAgitationPhase();
             Debug.Log(agitationValue);
             
         }
@@ -69,6 +72,9 @@ public class Monster : MonoBehaviour {
         {
             StartDash(target);
         }
+
+        if(testSpeed != -1)
+            agent.speed = testSpeed;
     }
 
     //IEnumerator NewPath()
