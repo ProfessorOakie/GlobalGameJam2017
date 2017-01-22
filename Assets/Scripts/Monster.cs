@@ -54,7 +54,7 @@ public class Monster : MonoBehaviour {
         agent.speed = walkSpeed;
         //StartCoroutine(NewPath());
         monsterSound = GetComponent<MonsterSound>();
-        StartCoroutine(SonarPulse());
+        StartCoroutine(InitialSonarPulse(30));
         
         playerHeadset = FindObjectOfType<NewtonVR.NVRHead>().gameObject.transform; 
 	}
@@ -103,6 +103,12 @@ public class Monster : MonoBehaviour {
         else agitationStage = 3;
     }
 
+    IEnumerator InitialSonarPulse(float timedelay)
+    {
+        yield return new WaitForSeconds(timedelay);
+        StartCoroutine(SonarPulse());
+    }
+
     IEnumerator SonarPulse()
     {
         //TODO Play sonar pulse animation
@@ -111,10 +117,15 @@ public class Monster : MonoBehaviour {
         float num = monsterSound.ChargeSound();
         yield return new WaitForSeconds(num + 0.5f);
 
-        //visual sonar pulse
-        SonarParent.instance.StartScan(SonarPulseSpot.transform.position, 10);
-
         monsterSound.PulseSound();
+
+        //visual sonar pulse
+        for(int i = 0; i < 10; i++)
+        {
+            SonarParent.instance.StartScan(SonarPulseSpot.transform.position, 10);
+            yield return new WaitForSeconds(0.1f);
+        }
+
         
         //Check if can see player
         RaycastHit hit;
