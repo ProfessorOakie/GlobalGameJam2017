@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Experimental;
 using WalkieSoundSystem;
-using MonsterSoundSystem;
 // Awu: Script so that once walkietalkie is grabbed stop looping through intro
 public class VO_Opening : MonoBehaviour
 {
