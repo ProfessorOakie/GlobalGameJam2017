@@ -15,6 +15,10 @@ public class PlayerController  : MonoBehaviour {
 
     private Vector3 lastPosition;
 
+    [SerializeField]
+    private AudioClip dieSound;
+    public GameObject deathCurtain;
+
     private void Start()
     {
         source = GetComponent<AudioSource>();
@@ -36,11 +40,17 @@ public class PlayerController  : MonoBehaviour {
     private void Die()
     {
         Debug.Log("Player Has Died");
-        Destroy(gameObject);
+        source.PlayOneShot(dieSound);
+
+        deathCurtain.SetActive(true);
+
+        //Destroy(gameObject);
     }
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.U))
+            Die();
         Debug.Log(Vector3.Distance(transform.position, lastPosition));
         if (Vector3.Distance(transform.position, lastPosition) < HeartbeatThreshold)
         {
