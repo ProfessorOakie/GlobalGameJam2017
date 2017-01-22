@@ -53,6 +53,7 @@ namespace NewtonVR
             PhysicalController.transform.localScale = Hand.transform.localScale;
 
             PhysicalController.SetActive(true);
+            PhysicalController.AddComponent<NVRCollisionSoundObject>();
 
             if (Hand.HasCustomModel)
             {
