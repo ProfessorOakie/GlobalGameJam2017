@@ -55,8 +55,7 @@ namespace NewtonVR
             if (material == NVRCollisionSoundMaterials.none || AudioPool[CurrentPoolIndex] == null)
                 return;
 
-            Debug.Log("Sound Made!!!");
-            Monster.instance.SetTarget(position);
+            Monster.instance.SetTarget(position, impactVolume);
 
             if (NVRCollisionSoundController.Instance.PitchModulationEnabled == true)
             {

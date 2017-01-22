@@ -28,7 +28,6 @@ public class SonarParent : MonoBehaviour {
             instance = this;
         else if (instance != this)
             Destroy(gameObject);
-        DontDestroyOnLoad(gameObject);
 
         rends = GetComponentsInChildren<Renderer>();
 
