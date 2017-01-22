@@ -18,7 +18,7 @@ namespace WalkieSoundSystem
         // call these methods when you want to play the sound 
         // using MonsterSoundSystem;
         // MonsterSound.IdleSound();
-        public void Checkin()
+        public void CheckIn()
         {
             audio = GetComponent<AudioSource>();
             audio.PlayOneShot(checkIn, 0.7f);

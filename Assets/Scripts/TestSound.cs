@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using MonsterSoundSystem;
 using HeartSoundSystem;
+using WalkieSoundSystem;
 
 public class TestSound : MonoBehaviour {
     public MonsterSound monsterSound;
     public HeartBeatSound heartBeatSound;
+    public WalkieTalkieSound walkieTalkieSound;
 	// Use this for initialization
 	void Start () {
         StartCoroutine(Example());
@@ -15,6 +17,10 @@ public class TestSound : MonoBehaviour {
 	}
     IEnumerator Example()
     {
+        yield return new WaitForSeconds(3);
+        walkieTalkieSound.CheckIn();
+        yield return new WaitForSeconds(5);
+        walkieTalkieSound.NoPickUpChekin();
         yield return new WaitForSeconds(3);
         monsterSound.PulseSound();
         yield return new WaitForSeconds(1);
