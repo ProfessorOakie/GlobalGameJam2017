@@ -34,6 +34,13 @@ public class Monster : MonoBehaviour {
 
     public float testSpeed = -1;
 
+    private Transform playerHeadset;
+
+    public GameObject SonarPulseSpot;
+    public float SonarPulseCooldown = 10.0f;
+
+    private MonsterSound monsterSound;
+
 	void Start () {
 
         // Singleton logic
@@ -46,6 +53,10 @@ public class Monster : MonoBehaviour {
         agent = GetComponent<NavMeshAgent>();
         agent.speed = walkSpeed;
         //StartCoroutine(NewPath());
+        monsterSound = GetComponent<MonsterSound>();
+        StartCoroutine(SonarPulse());
+        
+        playerHeadset = FindObjectOfType<NewtonVR.NVRHead>().gameObject.transform; 
 	}
 
     private void Update()
@@ -56,7 +67,7 @@ public class Monster : MonoBehaviour {
 
             agitationValue -= Time.deltaTime * 0.7f;
             CheckAgitationPhase();
-            Debug.Log(agitationValue);
+            //Debug.Log(agitationValue);
             
         }
         else 
@@ -90,6 +101,36 @@ public class Monster : MonoBehaviour {
         else if (agitationValue < flipToStage2) agitationStage = 1;
         else if (agitationValue < flipToStage3) agitationStage = 2;
         else agitationStage = 3;
+    }
+
+    IEnumerator SonarPulse()
+    {
+        //TODO Play sonar pulse animation
+
+        //wait for time till pulse
+        float num = monsterSound.ChargeSound();
+        yield return new WaitForSeconds(num + 0.5f);
+
+        //visual sonar pulse
+        SonarParent.instance.StartScan(SonarPulseSpot.transform.position, 10);
+
+        monsterSound.PulseSound();
+        
+        //Check if can see player
+        RaycastHit hit;
+        Vector3 rayDirection = playerHeadset.position - SonarPulseSpot.transform.position;
+        if (Physics.Raycast(SonarPulseSpot.transform.position, rayDirection, out hit, 100f))
+        {
+            Debug.Log(hit.collider.gameObject.ToString());
+             if (hit.collider.gameObject.GetComponent<NewtonVR.NVRHead>()) {
+                 // enemy can see the player!
+                 SetTarget(playerHeadset.position);
+             }
+        }
+
+        //cooldown till next pulse
+        yield return new WaitForSeconds(SonarPulseCooldown);
+        StartCoroutine(SonarPulse());
     }
 
 
