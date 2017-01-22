@@ -62,8 +62,11 @@ public class PlayerController  : MonoBehaviour {
 
     IEnumerator Heartbeat()
     {
+        yield return new WaitForEndOfFrame();
         AudioClip clip = heartbeatSounds[Random.Range(0, heartbeatSounds.Length)];
         source.PlayOneShot(clip, HeartbeatVolume);
+        Monster.instance.SetTarget(transform.position, HeartbeatVolume/HeartbeatVolumeMax);
+        SonarParent.instance.StartScan(transform.position, HeartbeatVolume/HeartbeatVolumeMax * 2.0f);
         //how long you wait between beats, scaled with volume
         yield return new WaitForSeconds(clip.length + (HeartbeatVolumeMax - HeartbeatVolume)/HeartbeatVolumeMax * 2.0f);
         StartCoroutine(Heartbeat());
