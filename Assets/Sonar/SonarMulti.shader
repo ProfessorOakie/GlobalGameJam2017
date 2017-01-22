@@ -52,9 +52,9 @@ Shader "Custom/Sonar_Multi" {
 			//o.Albedo = _hitPts[19].w;
 			if (d < _Time.y - _hitPts[i].w && d > _Time.y - _hitPts[i].w - 0.01 && (1 - (d / _Intensity[i])) > 0) {
 				//o.Albedo = 0;
-				float r = c.rgb.x + (1 - (d / _Intensity[i]));
-				float g = c.rgb.y + (1 - (d / _Intensity[i]));
-				float b = c.rgb.z + (1 - (d / _Intensity[i]));
+				float r = c.rgb.x + (1 - (d / _Intensity[i]))*8;
+				float g = c.rgb.y + (1 - (d / _Intensity[i]))*8;
+				float b = c.rgb.z + (1 - (d / _Intensity[i]))*8;
 
 				// set RGB values if they are larger
 				if (r > o.Albedo.x) o.Albedo.x = r;

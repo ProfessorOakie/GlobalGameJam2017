@@ -52,7 +52,7 @@ namespace NewtonVR
 
         public override void Play(NVRCollisionSoundMaterials material, Vector3 position, float impactVolume)
         {
-            if (material == NVRCollisionSoundMaterials.none)
+            if (material == NVRCollisionSoundMaterials.none || AudioPool[CurrentPoolIndex] == null)
                 return;
 
             Debug.Log("Sound Made!!!");
