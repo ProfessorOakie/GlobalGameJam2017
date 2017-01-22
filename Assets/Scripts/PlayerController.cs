@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class PlayerController  : MonoBehaviour {
 
-    private Rigidbody rig;
-
     [SerializeField]
     private float HeartbeatThreshold = 1.0f;
     public float HeartbeatVolume = 1.0f;
@@ -15,9 +13,10 @@ public class PlayerController  : MonoBehaviour {
     private AudioClip[] heartbeatSounds;
     private AudioSource source;
 
+    private Vector3 lastPosition;
+
     private void Start()
     {
-        rig = GetComponent<Rigidbody>();
         source = GetComponent<AudioSource>();
         HeartbeatVolumeInitial = HeartbeatVolume;
         StartCoroutine(Heartbeat());
@@ -42,10 +41,16 @@ public class PlayerController  : MonoBehaviour {
 
     private void Update()
     {
-        if(rig.velocity.magnitude < HeartbeatThreshold)
+        Debug.Log(Vector3.Distance(transform.position, lastPosition));
+        if (Vector3.Distance(transform.position, lastPosition) < HeartbeatThreshold)
         {
             IntensifyHeartbeat(Time.deltaTime);
         }
+        else
+        {
+            ResetHeartbeat();
+        }
+        lastPosition = transform.position;
     }
 
     //Not moving

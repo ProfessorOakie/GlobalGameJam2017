@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace HeartSoundSystem
-{
+
     public class HeartBeatSound : MonoBehaviour
     {
         public AudioClip heartBeatSlow;
@@ -31,4 +30,3 @@ namespace HeartSoundSystem
             audio.PlayOneShot(heartBeatFast);
         }
     }
-}

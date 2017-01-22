@@ -27,10 +27,11 @@ public class Monster : MonoBehaviour {
     private float walkSpeed = 0.5f;
     private bool isDashing = false;
 
-    private int agitationStage = 1;
-    private float agitationValue = 0;
-    private float flipToStage2 = 10.0f;
-    private float flipToStage3 = 15.0f;
+    public int agitationStage = 1;
+    public float agitationValue = 0;
+    public float agitationLowering = 0.2f;
+    public float flipToStage2 = 10.0f;
+    public float flipToStage3 = 15.0f;
 
     public float testSpeed = -1;
 
@@ -42,6 +43,9 @@ public class Monster : MonoBehaviour {
     private MonsterSound monsterSound;
 
     private Animator monsterAnimator;
+
+    private int lastStage = 1;
+    private bool stingerPlaying = false;
 
 	void Start () {
 
@@ -64,12 +68,18 @@ public class Monster : MonoBehaviour {
 
     private void Update()
     {
+
+        if (agitationStage == 3 && lastStage == 2 && !stingerPlaying)
+        {
+            StartCoroutine(Stinger());
+        }
         if (!isDashing)
         {
             targetPriority *= 0.99f;
 
-            agitationValue -= Time.deltaTime * 0.7f;
+            agitationValue -= agitationLowering;
             CheckAgitationPhase();
+            
             //Debug.Log(agitationValue);
 
             //if (agent.remainingDistance < monsterReach)
@@ -77,8 +87,8 @@ public class Monster : MonoBehaviour {
 
         }
         else 
-        {    //Monster is dashing
-            if (agent.remainingDistance < monsterReach)
+        {    //Monster is 
+            if (agent.enabled && agent.remainingDistance < monsterReach)
             {
                 if (agitationStage == 2)
                     StopBriskWalk();
@@ -99,6 +109,7 @@ public class Monster : MonoBehaviour {
 
         if(testSpeed != -1)
             agent.speed = testSpeed;
+        lastStage = agitationStage;
     }
 
     //IEnumerator NewPath()
@@ -120,6 +131,19 @@ public class Monster : MonoBehaviour {
     {
         yield return new WaitForSeconds(timedelay);
         StartCoroutine(SonarPulse());
+    }
+
+
+    IEnumerator Stinger()
+    {
+        if(agitationStage == 3)
+        {
+            stingerPlaying = true;
+            monsterSound.Stinger();
+            yield return new WaitForSeconds(30);
+            stingerPlaying = false;
+            StartCoroutine(Stinger());
+        }
     }
 
     IEnumerator SonarPulse()

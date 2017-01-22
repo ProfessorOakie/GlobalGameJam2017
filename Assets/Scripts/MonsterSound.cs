@@ -8,6 +8,7 @@ using UnityEngine;
         public AudioClip[] monsterCharge;
         public AudioClip[] monsterPulse;
         public AudioClip[] monsterWalk;
+        public AudioClip monsterStinger;
         public AudioClip shatter;
         public AudioClip ceilingBreak;
         AudioSource audio;
@@ -19,13 +20,19 @@ using UnityEngine;
             audio = GetComponent<AudioSource>();
             audio.PlayOneShot(shatter, 0.7f);
         }
+        public float Stinger()
+        {
+            audio = GetComponent<AudioSource>();
+            audio.PlayOneShot(monsterStinger, 0.7f);
+            return monsterStinger.length;
+        }
         public float IdleSound()
         {
             audio = GetComponent<AudioSource>();
             int random = Random.Range(0, monsterIdle.Length);
             audio.PlayOneShot(monsterIdle[random], 0.7f);
             return monsterIdle[random].length;
-    }
+        }
 
         public float ChargeSound()
         {
