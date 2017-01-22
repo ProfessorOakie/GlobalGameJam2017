@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController  : MonoBehaviour {
 
@@ -51,6 +52,13 @@ public class PlayerController  : MonoBehaviour {
     {
         if (Input.GetKeyDown(KeyCode.U))
             Die();
+        //if (Input.GetKeyDown(KeyCode.R))
+        //{
+        //    Scene scene = SceneManager.GetActiveScene();
+        //    SceneManager.LoadScene(scene.name);
+        //}
+
+
         Debug.Log(Vector3.Distance(transform.position, lastPosition));
         if (Vector3.Distance(transform.position, lastPosition) < HeartbeatThreshold)
         {
