@@ -41,6 +41,8 @@ public class Monster : MonoBehaviour {
 
     private MonsterSound monsterSound;
 
+    private Animator monsterAnimator;
+
 	void Start () {
 
         // Singleton logic
@@ -54,6 +56,7 @@ public class Monster : MonoBehaviour {
         agent.speed = walkSpeed;
         //StartCoroutine(NewPath());
         monsterSound = GetComponent<MonsterSound>();
+        monsterAnimator = GetComponentInChildren<Animator>();
         StartCoroutine(InitialSonarPulse(30));
         
         playerHeadset = FindObjectOfType<NewtonVR.NVRHead>().gameObject.transform; 
@@ -68,13 +71,23 @@ public class Monster : MonoBehaviour {
             agitationValue -= Time.deltaTime * 0.7f;
             CheckAgitationPhase();
             //Debug.Log(agitationValue);
-            
+
+            //if (agent.remainingDistance < monsterReach)
+            //    monsterAnimator.SetTrigger("Idle");
+
         }
         else 
         {    //Monster is dashing
             if (agent.remainingDistance < monsterReach)
             {
-                StopDash();
+                if (agitationStage == 2)
+                    StopBriskWalk();
+                else if (agitationStage == 3)
+                    StopDash();
+                else if (agitationStage == 1)
+                    StopWalk();
+                //else
+                //    monsterAnimator.SetTrigger("Idle");
             }
         }
 
@@ -145,26 +158,43 @@ public class Monster : MonoBehaviour {
     }
 
 
+    private void StartWalk(Vector3 position)
+    {
+        monsterAnimator.SetTrigger("Walk");
+        agent.destination = position;
+        agent.speed = walkSpeed;
+        isDashing = true;
+    }
+    private void StopWalk()
+    {
+        monsterAnimator.SetTrigger("Idle");
+        agent.speed = walkSpeed;
+        isDashing = false;
+    }
     private void StartBriskWalk(Vector3 position)
     {
+        monsterAnimator.SetTrigger("BriskWalk");
         agent.destination = position;
         agent.speed = briskWalkSpeed;
         isDashing = true;
     }
     private void StopBriskWalk()
     {
+        monsterAnimator.SetTrigger("Idle");
         agent.speed = walkSpeed;
         isDashing = false;
     }
 
     private void StartDash(Vector3 position)
     {
+        monsterAnimator.SetTrigger("Dash");
         agent.destination = position;
         agent.speed = dashSpeed;
         isDashing = true;
     }
     private void StopDash()
     {
+        monsterAnimator.SetTrigger("Idle");
         agent.speed = walkSpeed;
         isDashing = false;
     }
@@ -183,6 +213,7 @@ public class Monster : MonoBehaviour {
             CheckAgitationPhase();
             if (agitationStage == 2) StartBriskWalk(position);
             else if (agitationStage == 3) StartDash(position);
+            else StartWalk(position);
         }
         else
         {
