@@ -1,72 +1,15 @@
 fileFormatVersion: 2
-guid: 01ae8b09c53da1741a4262f0fa53565e
-timeCreated: 1485055609
+guid: 37fbc6c82b5a87a4abde2451e5b97dd2
+timeCreated: 1485063772
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
-    100000: pCube11
-    100002: pCube15
-    100004: pCube17
-    100006: pCube19
-    100008: pCube20
-    100010: pCube60
-    100012: pCylinder14
-    100014: pCylinder15
-    100016: pCylinder16
-    100018: pCylinder17
-    100020: //RootNode
-    400000: pCube11
-    400002: pCube15
-    400004: pCube17
-    400006: pCube19
-    400008: pCube20
-    400010: pCube60
-    400012: pCylinder14
-    400014: pCylinder15
-    400016: pCylinder16
-    400018: pCylinder17
-    400020: //RootNode
-    2300000: pCube11
-    2300002: pCube15
-    2300004: pCube17
-    2300006: pCube19
-    2300008: pCube20
-    2300010: pCube60
-    2300012: pCylinder14
-    2300014: pCylinder15
-    2300016: pCylinder16
-    2300018: pCylinder17
-    3300000: pCube11
-    3300002: pCube15
-    3300004: pCube17
-    3300006: pCube19
-    3300008: pCube20
-    3300010: pCube60
-    3300012: pCylinder14
-    3300014: pCylinder15
-    3300016: pCylinder16
-    3300018: pCylinder17
-    4300000: pCube60
-    4300002: pCube11
-    4300004: pCube15
-    4300006: pCube17
-    4300008: pCube19
-    4300010: pCube20
-    4300012: pCylinder14
-    4300014: pCylinder15
-    4300016: pCylinder16
-    4300018: pCylinder17
-    6400000: pCube11
-    6400002: pCube15
-    6400004: pCube17
-    6400006: pCube19
-    6400008: pCube20
-    6400010: pCube60
-    6400012: pCylinder14
-    6400014: pCylinder15
-    6400016: pCylinder16
-    6400018: pCylinder17
+    100000: //RootNode
+    400000: //RootNode
+    2300000: //RootNode
+    3300000: //RootNode
+    4300000: solo_cup
     9500000: //RootNode
   materials:
     importMaterials: 1
@@ -94,7 +37,7 @@ ModelImporter:
     lODScreenPercentages: []
     globalScale: 1
     meshCompression: 0
-    addColliders: 1
+    addColliders: 0
     importBlendShapes: 1
     swapUVChannels: 0
     generateSecondaryUV: 0

@@ -24,7 +24,7 @@ public class Monster : MonoBehaviour {
     [SerializeField]
     private float briskWalkSpeed = 1.5f;
     [SerializeField]
-    private float walkSpeed;
+    private float walkSpeed = 0.5f;
     private bool isDashing = false;
 
     private int agitationStage = 1;

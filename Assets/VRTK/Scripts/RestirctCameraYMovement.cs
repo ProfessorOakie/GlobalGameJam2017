@@ -20,7 +20,7 @@ public class RestirctCameraYMovement : MonoBehaviour {
             float yPos = Mathf.Clamp(cameraRig.transform.position.y, minY, maxY);
 
             // Assigns these values to the Transform.position component of the Player
-            cameraRig.transform.position = new Vector3(cameraRig.transform.position.x, yPos, 0);
+            cameraRig.transform.position = new Vector3(cameraRig.transform.position.x, yPos, cameraRig.transform.position.z);
         }
     }
 }
