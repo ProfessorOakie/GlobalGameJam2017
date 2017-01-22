@@ -19,6 +19,8 @@ public class TestSound : MonoBehaviour {
     {
         yield return new WaitForSeconds(3);
         walkieTalkieSound.CheckIn();
+        yield return new WaitForSeconds(10);
+        walkieTalkieSound.CheckIn();
         yield return new WaitForSeconds(5);
         walkieTalkieSound.NoPickUpChekin();
         yield return new WaitForSeconds(3);
