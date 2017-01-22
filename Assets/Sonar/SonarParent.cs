@@ -75,7 +75,7 @@ public class SonarParent : MonoBehaviour {
             {
                 r.material.SetVector("_hitPt", position);
                 r.material.SetFloat("_StartTime", Time.time);
-                r.material.SetFloat("_Intensity", intensity);
+                r.material.SetFloat("_Intensity", intensity * 0.25f);
             }
         }
     }
