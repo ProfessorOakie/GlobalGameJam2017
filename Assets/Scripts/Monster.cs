@@ -21,8 +21,16 @@ public class Monster : MonoBehaviour {
 
     [SerializeField]
     private float dashSpeed = 3.0f;
+    [SerializeField]
+    private float briskWalkSpeed = 1.5f;
+    [SerializeField]
     private float walkSpeed;
     private bool isDashing = false;
+
+    private int agitationStage = 1;
+    private float agitationValue = 0;
+    private float flipToStage2 = 10.0f;
+    private float flipToStage3 = 15.0f;
 
 	void Start () {
 
@@ -34,7 +42,7 @@ public class Monster : MonoBehaviour {
         DontDestroyOnLoad(gameObject);
 
         agent = GetComponent<NavMeshAgent>();
-        walkSpeed = agent.speed;
+        agent.speed = walkSpeed;
         //StartCoroutine(NewPath());
 	}
 
@@ -43,7 +51,10 @@ public class Monster : MonoBehaviour {
         if (!isDashing)
         {
             targetPriority *= 0.99f;
-            Debug.Log("Priority: " + targetPriority);
+
+            agitationValue -= Time.deltaTime * 0.7f;
+            Debug.Log(agitationValue);
+            
         }
         else 
         {    //Monster is dashing
@@ -66,7 +77,28 @@ public class Monster : MonoBehaviour {
     //    yield return new WaitForSeconds(0.5f);
     //    StartCoroutine(NewPath());
     //}
-    
+
+    private void CheckAgitationPhase()
+    {
+        if (agitationValue < 0) agitationValue = 0;
+        else if (agitationValue < flipToStage2) agitationStage = 1;
+        else if (agitationValue < flipToStage3) agitationStage = 2;
+        else agitationStage = 3;
+    }
+
+
+    private void StartBriskWalk(Vector3 position)
+    {
+        agent.destination = position;
+        agent.speed = briskWalkSpeed;
+        isDashing = true;
+    }
+    private void StopBriskWalk()
+    {
+        agent.speed = walkSpeed;
+        isDashing = false;
+    }
+
     private void StartDash(Vector3 position)
     {
         agent.destination = position;
@@ -89,6 +121,10 @@ public class Monster : MonoBehaviour {
             if (priority == -1) priority = maxPriority;
             else if (priority > maxPriority) priority = maxPriority;
             targetPriority = priority;
+            agitationValue += priority;
+            CheckAgitationPhase();
+            if (agitationStage == 2) StartBriskWalk(position);
+            else if (agitationStage == 3) StartDash(position);
         }
         else
         {
