@@ -20,45 +20,60 @@ namespace WalkieSoundSystem
         // call these methods when you want to play the sound 
         // using MonsterSoundSystem;
         // MonsterSound.IdleSound();
-        public void CheckIn()
+
+        private void Start()
         {
             audio = GetComponent<AudioSource>();
-            audio.PlayOneShot(checkIn, 0.7f + volumeAddition);
+        }
+
+        public void CheckIn()
+        {
+            StartCoroutine(PlayVoiceLineWithSonar(checkIn, 0.7f + volumeAddition));
         } 
         public void MonsterAbility()
         {
-            audio = GetComponent<AudioSource>();
-            audio.PlayOneShot(monsterAbility, 0.7f + volumeAddition);
+            StartCoroutine(PlayVoiceLineWithSonar(monsterAbility, 0.7f + volumeAddition));
         }
 
         public void NoPickUpChekin()
         {
-            audio = GetComponent<AudioSource>();
-            audio.PlayOneShot(noPickUpCheckin, 0.9f + volumeAddition);
+            StartCoroutine(PlayVoiceLineWithSonar(noPickUpCheckin, 0.9f + volumeAddition));
         }
 
         public void OpeningDialogue1()
         {
-            audio = GetComponent<AudioSource>();
-            audio.PlayOneShot(openingDialogue1, 0.6f + volumeAddition);
+            StartCoroutine(PlayVoiceLineWithSonar(openingDialogue1, 0.6f + volumeAddition));
         }
 
         public void OpeningDialogue2()
         {
-            audio = GetComponent<AudioSource>();
-            audio.PlayOneShot(openingDialogue2, 0.6f + volumeAddition);
+            StartCoroutine(PlayVoiceLineWithSonar(openingDialogue2, 0.6f + volumeAddition));
         }
 
         public void PickupCheckin()
         {
-            audio = GetComponent<AudioSource>();
-            audio.PlayOneShot(pickupCheckin, 0.6f + volumeAddition);
+            StartCoroutine(PlayVoiceLineWithSonar(pickupCheckin, 0.6f + volumeAddition));
         }
 
         public void PowerOut()
         {
-            audio = GetComponent<AudioSource>();
-            audio.PlayOneShot(powerOut, 0.6f + volumeAddition);
+            StartCoroutine(PlayVoiceLineWithSonar(powerOut, 0.6f + volumeAddition));
+        }
+
+        public void OnPickup()
+        {
+            StartCoroutine(PlayVoiceLineWithSonar(onPickup, 0.6f + volumeAddition));
+        }
+
+        IEnumerator PlayVoiceLineWithSonar(AudioClip clip, float vol)
+        {
+            audio.PlayOneShot(clip, vol);
+            for(int i = 0; i < clip.length; i++)
+            {
+                SonarParent.instance.StartScan(transform.position, vol);
+                Monster.instance.SetTarget(transform.position, vol);
+                yield return new WaitForSeconds(1);
+            }
         }
     }
 }

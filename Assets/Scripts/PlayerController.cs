@@ -5,9 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class PlayerController  : MonoBehaviour {
 
+    public static PlayerController instance = null;
+
     [SerializeField]
     private float HeartbeatThreshold = 1.0f;
-    public float HeartbeatVolume = 1.0f;
+    public float HeartbeatVolume = 0.8f;
     private float HeartbeatVolumeInitial;
     public float HeartbeatVolumeMax = 3.0f;
     [SerializeField]
@@ -19,12 +21,16 @@ public class PlayerController  : MonoBehaviour {
     [SerializeField]
     private AudioClip dieSound;
     public GameObject deathCurtain;
+    private bool isActive;
 
     private void Start()
     {
+        if (instance != null)
+            Destroy(gameObject);
+        else instance = this;
+
         source = GetComponent<AudioSource>();
         HeartbeatVolumeInitial = HeartbeatVolume;
-        StartCoroutine(Heartbeat());
     }
 
     void CheckCollidingWithMonster(Collider collider)
@@ -50,6 +56,14 @@ public class PlayerController  : MonoBehaviour {
 
     private void Update()
     {
+        if (!isActive)
+        {
+            if (Monster.instance.areYouActive())
+            {
+                Activate();
+            }
+        }
+
         if (Input.GetKeyDown(KeyCode.U))
             Die();
         //if (Input.GetKeyDown(KeyCode.R))
@@ -59,7 +73,7 @@ public class PlayerController  : MonoBehaviour {
         //}
 
 
-        Debug.Log(Vector3.Distance(transform.position, lastPosition));
+        //Debug.Log(Vector3.Distance(transform.position, lastPosition));
         if (Vector3.Distance(transform.position, lastPosition) < HeartbeatThreshold)
         {
             IntensifyHeartbeat(Time.deltaTime);
@@ -81,6 +95,11 @@ public class PlayerController  : MonoBehaviour {
     private void ResetHeartbeat()
     {
         HeartbeatVolume = HeartbeatVolumeInitial;
+    }
+
+    public void StartHeartbeat()
+    {
+        StartCoroutine(Heartbeat());
     }
 
     IEnumerator Heartbeat()
@@ -114,6 +133,11 @@ public class PlayerController  : MonoBehaviour {
     private void OnTriggerStay(Collider other)
     {
         CheckCollidingWithMonster(other);
+    }
+
+    public void Activate()
+    {
+        isActive = false;
     }
 
 }

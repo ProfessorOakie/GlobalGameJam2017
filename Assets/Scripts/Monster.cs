@@ -46,6 +46,7 @@ public class Monster : MonoBehaviour {
 
     private int lastStage = 1;
     private bool stingerPlaying = false;
+    private bool isActive = false;
 
 	void Start () {
 
@@ -61,55 +62,58 @@ public class Monster : MonoBehaviour {
         //StartCoroutine(NewPath());
         monsterSound = GetComponent<MonsterSound>();
         monsterAnimator = GetComponentInChildren<Animator>();
-        StartCoroutine(InitialSonarPulse(30));
         
         playerHeadset = FindObjectOfType<NewtonVR.NVRHead>().gameObject.transform; 
 	}
 
     private void Update()
     {
-
-        if (agitationStage == 3 && lastStage == 2 && !stingerPlaying)
+        if (isActive)
         {
-            StartCoroutine(Stinger());
-        }
-        if (!isDashing)
-        {
-            targetPriority *= 0.99f;
-
-            agitationValue -= agitationLowering;
-            CheckAgitationPhase();
-            
-            //Debug.Log(agitationValue);
-
-            //if (agent.remainingDistance < monsterReach)
-            //    monsterAnimator.SetTrigger("Idle");
-
-        }
-        else 
-        {    //Monster is 
-            if (agent.enabled && agent.remainingDistance < monsterReach)
+            if (agitationStage == 3 && lastStage == 2 && !stingerPlaying)
             {
-                if (agitationStage == 2)
-                    StopBriskWalk();
-                else if (agitationStage == 3)
-                    StopDash();
-                else if (agitationStage == 1)
-                    StopWalk();
-                //else
-                //    monsterAnimator.SetTrigger("Idle");
+                StartCoroutine(Stinger());
             }
-        }
+            if (!isDashing)
+            {
+                targetPriority *= 0.99f;
 
-        // For testing
-        if (Input.GetKeyDown(KeyCode.Y))
-        {
-            StartDash(target);
-        }
+                agitationValue -= agitationLowering;
+                CheckAgitationPhase();
 
-        if(testSpeed != -1)
-            agent.speed = testSpeed;
-        lastStage = agitationStage;
+                //Debug.Log(agitationValue);
+
+                //if (agent.remainingDistance < monsterReach)
+                //    monsterAnimator.SetTrigger("Idle");
+
+            }
+            else
+            {    //Monster is 
+                if (agent.enabled && agent.remainingDistance < monsterReach)
+                {
+                    if (agitationStage == 2)
+                        StopBriskWalk();
+                    else if (agitationStage == 3)
+                        StopDash();
+                    else if (agitationStage == 1)
+                        StopWalk();
+                    //else
+                    //    monsterAnimator.SetTrigger("Idle");
+                }
+            }
+
+            // For testing
+            if (Input.GetKeyDown(KeyCode.Y))
+            {
+                agitationValue += 30;
+//                StartDash(target);
+            }
+
+
+            if (testSpeed != -1)
+                agent.speed = testSpeed;
+            lastStage = agitationStage;
+        }
     }
 
     //IEnumerator NewPath()
@@ -243,5 +247,18 @@ public class Monster : MonoBehaviour {
         {
             targetPriority *= 0.96f;
         }
+    }
+
+    public void Activate()
+    {
+        isActive = true;
+        StartCoroutine(InitialSonarPulse(10));
+        agitationStage = 1;
+        agitationValue = 0;
+    }
+
+    public bool areYouActive()
+    {
+        return isActive;
     }
 }

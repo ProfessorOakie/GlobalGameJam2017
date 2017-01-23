@@ -1,10 +1,18 @@
 fileFormatVersion: 2
 guid: 092bcd454515fec49ab18edae3af8ef5
-timeCreated: 1485072053
+timeCreated: 1485131170
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - checkIn: {instanceID: 0}
+  - monsterAbility: {instanceID: 0}
+  - noPickUpCheckin: {instanceID: 0}
+  - onPickup: {fileID: 8300000, guid: ee7f0bb8e8a10c143b45e0909e86841c, type: 3}
+  - openingDialogue1: {instanceID: 0}
+  - openingDialogue2: {instanceID: 0}
+  - pickupCheckin: {instanceID: 0}
+  - powerOut: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
