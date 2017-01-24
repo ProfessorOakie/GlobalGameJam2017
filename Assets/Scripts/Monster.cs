@@ -46,6 +46,7 @@ public class Monster : MonoBehaviour {
 
     private int lastStage = 1;
     private bool stingerPlaying = false;
+    private bool hardMode = false;
 
 	void Start () {
 
@@ -77,7 +78,9 @@ public class Monster : MonoBehaviour {
         {
             targetPriority *= 0.99f;
 
-            agitationValue -= agitationLowering;
+            if (!hardMode) agitationValue -= agitationLowering;
+            else agitationValue += agitationLowering;
+
             CheckAgitationPhase();
             
             //Debug.Log(agitationValue);
@@ -243,5 +246,11 @@ public class Monster : MonoBehaviour {
         {
             targetPriority *= 0.96f;
         }
+    }
+
+    public void StartHardMode()
+    {
+        hardMode = true;
+        if (!stingerPlaying) StartCoroutine(Stinger());
     }
 }

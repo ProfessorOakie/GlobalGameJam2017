@@ -25,10 +25,11 @@ namespace WalkieSoundSystem
             audio = GetComponent<AudioSource>();
             audio.PlayOneShot(checkIn, 0.7f + volumeAddition);
         } 
-        public void MonsterAbility()
+        public float MonsterAbility()
         {
             audio = GetComponent<AudioSource>();
             audio.PlayOneShot(monsterAbility, 0.7f + volumeAddition);
+            return monsterAbility.length;
         }
 
         public void NoPickUpChekin()

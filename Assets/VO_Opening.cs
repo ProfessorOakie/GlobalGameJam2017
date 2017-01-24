@@ -118,7 +118,10 @@ public class VO_Opening : MonoBehaviour
             generatorSound.GeneratorOn();
 
             yield return new WaitForSeconds(5);
-            walkieTalkieSound.MonsterAbility();
+
+            float temp = walkieTalkieSound.MonsterAbility();
+            yield return new WaitForSeconds(temp);
+            Monster.instance.StartHardMode();
         }
         // while picked up within 5 seconds 
         while (!grabbing)
@@ -132,7 +135,10 @@ public class VO_Opening : MonoBehaviour
             generatorSound.GeneratorOn();
 
             yield return new WaitForSeconds(5);
-            walkieTalkieSound.MonsterAbility();
+
+            float temp = walkieTalkieSound.MonsterAbility();
+            yield return new WaitForSeconds(temp);
+            Monster.instance.StartHardMode();
         }
 
     }
