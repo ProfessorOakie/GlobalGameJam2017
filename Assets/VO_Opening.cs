@@ -52,6 +52,9 @@ public class VO_Opening : MonoBehaviour
             }
         }
 
+        walkieTalkieSound.OnPickup();
+        yield return new WaitForSeconds(27);
+
         generatorSound.GeneratorOff();
         foreach (GameObject g in powerLightsOff)
             g.SetActive(false);
@@ -61,15 +64,19 @@ public class VO_Opening : MonoBehaviour
 
         yield return new WaitForSeconds(3);
         walkieTalkieSound.PowerOut();
+        
 
-        yield return new WaitForSeconds(20);
+        yield return new WaitForSeconds(29);
         
         
         // wait for 5 seconds before monster footsteps 
         // drop monster and play footstep
         MonsterCapsule.GetComponent<UnityEngine.AI.NavMeshAgent>().enabled = true;
         monsterSound.CeilingBreak();
+        Monster.instance.Activate();
 
+        //start heartbeat
+        PlayerController.instance.StartHeartbeat();
         
         yield return new WaitForSeconds(1);
         monsterSound.MonsterFootStep();
@@ -111,34 +118,42 @@ public class VO_Opening : MonoBehaviour
         while (grabbing)
         {
             walkieTalkieSound.NoPickUpChekin();
+            yield return new WaitForSeconds(30);
             // return monster back into the wanderloop 
             // play 45 seconds timer 
-            yield return new WaitForSeconds(20);
+            //yield return new WaitForSeconds(20);
             // start generator sound 
-            generatorSound.GeneratorOn();
+            /*generatorSound.GeneratorOn();
+
+            foreach (GameObject g in powerLightsOff)
+                g.SetActive(true);
+
+            foreach (GameObject g in powerLightsOn)
+                g.SetActive(false);
 
             yield return new WaitForSeconds(5);
-
-            float temp = walkieTalkieSound.MonsterAbility();
-            yield return new WaitForSeconds(temp);
-            Monster.instance.StartHardMode();
+            walkieTalkieSound.MonsterAbility();*/
         }
         // while picked up within 5 seconds 
         while (!grabbing)
         {
             walkieTalkieSound.PickupCheckin();
+            yield return new WaitForSeconds(30);
             // get monster back into the wanderloop 
             // start 15 seconds timer 
-            yield return new WaitForSeconds(10);
+            //yield return new WaitForSeconds(10);
             // return monster back into the wanderloop 
             // start generator sound 
-            generatorSound.GeneratorOn();
+            /*generatorSound.GeneratorOn();
+
+            foreach (GameObject g in powerLightsOff)
+                g.SetActive(true);
+
+            foreach (GameObject g in powerLightsOn)
+                g.SetActive(false);
 
             yield return new WaitForSeconds(5);
-
-            float temp = walkieTalkieSound.MonsterAbility();
-            yield return new WaitForSeconds(temp);
-            Monster.instance.StartHardMode();
+            walkieTalkieSound.MonsterAbility();*/
         }
 
     }
