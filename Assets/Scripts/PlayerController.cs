@@ -21,7 +21,6 @@ public class PlayerController  : MonoBehaviour {
     [SerializeField]
     private AudioClip dieSound;
     public GameObject deathCurtain;
-    private bool isActive;
 
     private void Start()
     {
@@ -56,14 +55,6 @@ public class PlayerController  : MonoBehaviour {
 
     private void Update()
     {
-        if (!isActive)
-        {
-            if (Monster.instance.areYouActive())
-            {
-                Activate();
-            }
-        }
-
         if (Input.GetKeyDown(KeyCode.U))
             Die();
         //if (Input.GetKeyDown(KeyCode.R))
@@ -133,11 +124,6 @@ public class PlayerController  : MonoBehaviour {
     private void OnTriggerStay(Collider other)
     {
         CheckCollidingWithMonster(other);
-    }
-
-    public void Activate()
-    {
-        isActive = false;
     }
 
 }

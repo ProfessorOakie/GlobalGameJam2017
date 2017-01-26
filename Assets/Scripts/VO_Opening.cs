@@ -20,8 +20,6 @@ public class VO_Opening : MonoBehaviour
     void Start()
     {
         StartCoroutine(Example());
-        // prevent the capsule from droping through the roof
-        MonsterCapsule.GetComponent<UnityEngine.AI.NavMeshAgent>().enabled = false;
 
         foreach(GameObject g in powerLightsOff)
             g.SetActive(true);
@@ -41,6 +39,7 @@ public class VO_Opening : MonoBehaviour
     
     IEnumerator Example()
     {
+
         while (grabbing) {
             yield return new WaitForSeconds(5);
             walkieTalkieSound.OpeningDialogue1();
@@ -62,44 +61,28 @@ public class VO_Opening : MonoBehaviour
         foreach (GameObject g in powerLightsOn)
             g.SetActive(true);
 
-        yield return new WaitForSeconds(3);
-        walkieTalkieSound.PowerOut();
-        
-
-        yield return new WaitForSeconds(29);
-        
-        
-        // wait for 5 seconds before monster footsteps 
-        // drop monster and play footstep
-        MonsterCapsule.GetComponent<UnityEngine.AI.NavMeshAgent>().enabled = true;
-        monsterSound.CeilingBreak();
-        Monster.instance.Activate();
-
         //start heartbeat
         PlayerController.instance.StartHeartbeat();
+
+        yield return new WaitForSeconds(3);
+        walkieTalkieSound.PowerOut();
+        yield return new WaitForSeconds(10);
         
-        yield return new WaitForSeconds(1);
-        monsterSound.MonsterFootStep();
-        yield return new WaitForSeconds(1);
-        monsterSound.MonsterFootStep();
-        yield return new WaitForSeconds(1);
-        monsterSound.MonsterFootStep();
-       
-        yield return new WaitForSeconds(1);
-        monsterSound.MonsterFootStep();
-        yield return new WaitForSeconds(1);
-        monsterSound.MonsterFootStep();
-        yield return new WaitForSeconds(1);
-        monsterSound.MonsterFootStep();
-        yield return new WaitForSeconds(1);
-        monsterSound.MonsterFootStep();
-        heartBeatSound.HeartBeatFast();
-        yield return new WaitForSeconds(1);
-        monsterSound.MonsterFootStep();
-        yield return new WaitForSeconds(1);
-        monsterSound.MonsterFootStep();
-        yield return new WaitForSeconds(1);
-        monsterSound.MonsterFootStep();
+
+        
+        // play footsteps        
+        for(int i = 0; i < 15; i++)
+        {
+            monsterSound.MonsterFootStep();
+            yield return new WaitForSeconds(1);
+        }
+
+        
+        // drop monster
+        monsterSound.CeilingBreak();
+        Monster.instance.enabled = true;
+        Monster.instance.Activate();
+        
         
         // wait for 30 seconds 
         yield return new WaitForSeconds(30);
