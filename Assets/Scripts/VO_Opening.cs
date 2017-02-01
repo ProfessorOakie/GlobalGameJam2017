@@ -17,9 +17,10 @@ public class VO_Opening : MonoBehaviour
     public GameObject[] powerLightsOff;
     public GameObject[] powerLightsOn;
 
+    public bool skipIntro = false;
+
     void Start()
     {
-        StartCoroutine(Example());
 
         foreach(GameObject g in powerLightsOff)
             g.SetActive(true);
@@ -27,6 +28,7 @@ public class VO_Opening : MonoBehaviour
         foreach (GameObject g in powerLightsOn)
             g.SetActive(false);
 
+        StartCoroutine(Example());
     }
     public void isGrabbing()
     {
@@ -39,20 +41,25 @@ public class VO_Opening : MonoBehaviour
     
     IEnumerator Example()
     {
+        if (!skipIntro)
+        {
 
-        while (grabbing) {
-            yield return new WaitForSeconds(5);
-            walkieTalkieSound.OpeningDialogue1();
-            yield return new WaitForSeconds(15);
             while (grabbing)
             {
-                walkieTalkieSound.OpeningDialogue2();
-                yield return new WaitForSeconds(10);
+                yield return new WaitForSeconds(5);
+                walkieTalkieSound.OpeningDialogue1();
+                yield return new WaitForSeconds(15);
+                while (grabbing)
+                {
+                    walkieTalkieSound.OpeningDialogue2();
+                    yield return new WaitForSeconds(10);
+                }
             }
-        }
 
-        walkieTalkieSound.OnPickup();
-        yield return new WaitForSeconds(27);
+            walkieTalkieSound.OnPickup();
+            yield return new WaitForSeconds(27);
+
+        }
 
         generatorSound.GeneratorOff();
         foreach (GameObject g in powerLightsOff)
@@ -80,6 +87,7 @@ public class VO_Opening : MonoBehaviour
         
         // drop monster
         monsterSound.CeilingBreak();
+        
         Monster.instance.enabled = true;
         Monster.instance.Activate();
         

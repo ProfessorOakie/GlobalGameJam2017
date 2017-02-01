@@ -31,7 +31,7 @@ public class Monster : MonoBehaviour {
     public float agitationValue = 0;
     public float agitationLowering = 0.2f;
     public float flipToStage2 = 10.0f;
-    public float flipToStage3 = 15.0f;
+    public float flipToStage3 = 20.0f;
 
     public float testSpeed = -1;
 
@@ -66,6 +66,8 @@ public class Monster : MonoBehaviour {
         
         playerHeadset = FindObjectOfType<NewtonVR.NVRHead>().gameObject.transform;
         instance.enabled = false;
+
+        StartCoroutine(IdleSounds());
 	}
 
     private void Update()
@@ -84,8 +86,8 @@ public class Monster : MonoBehaviour {
         CheckAgitationPhase();
             
         //Debug.Log(agitationValue);
-            agitationValue -= agitationLowering;
-            CheckAgitationPhase();
+            //agitationValue -= agitationLowering;
+            //CheckAgitationPhase();
 
             //Debug.Log(agitationValue);
 
@@ -290,6 +292,12 @@ public class Monster : MonoBehaviour {
         StartCoroutine(InitialSonarPulse(10));
         agitationStage = 1;
         agitationValue = 0;
+    }
+
+    IEnumerator IdleSounds()
+    {
+        yield return new WaitForSeconds(3 + Random.value * 5);
+        yield return new WaitForSeconds(monsterSound.IdleSound());
     }
 
 }
