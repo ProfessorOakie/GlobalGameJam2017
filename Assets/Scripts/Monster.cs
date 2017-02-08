@@ -30,8 +30,8 @@ public class Monster : MonoBehaviour {
     public int agitationStage = 1;
     public float agitationValue = 0;
     public float agitationLowering = 0.2f;
-    public float flipToStage2 = 10.0f;
-    public float flipToStage3 = 20.0f;
+    public float flipToStage2 = 13.0f;
+    public float flipToStage3 = 26.0f;
 
     public float testSpeed = -1;
 
@@ -163,7 +163,7 @@ public class Monster : MonoBehaviour {
 
         //wait for time till pulse
         float num = monsterSound.ChargeSound();
-        yield return new WaitForSeconds(num + 0.5f);
+        yield return new WaitForSeconds(num + 1.5f);
 
         monsterSound.PulseSound();
 
@@ -174,6 +174,7 @@ public class Monster : MonoBehaviour {
             yield return new WaitForSeconds(0.1f);
         }
 
+        yield return new WaitForSeconds(0.5f);
         
         //Check if can see player
         RaycastHit hit;

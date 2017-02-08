@@ -87,7 +87,7 @@ public class VO_Opening : MonoBehaviour
         
         // drop monster
         monsterSound.CeilingBreak();
-        
+        yield return new WaitForSeconds(1);
         Monster.instance.enabled = true;
         Monster.instance.Activate();
         
@@ -110,6 +110,7 @@ public class VO_Opening : MonoBehaviour
         {
             walkieTalkieSound.NoPickUpChekin();
             yield return new WaitForSeconds(30);
+            Monster.instance.StartHardMode();
             // return monster back into the wanderloop 
             // play 45 seconds timer 
             //yield return new WaitForSeconds(20);
@@ -130,6 +131,7 @@ public class VO_Opening : MonoBehaviour
         {
             walkieTalkieSound.PickupCheckin();
             yield return new WaitForSeconds(30);
+            Monster.instance.StartHardMode();
             // get monster back into the wanderloop 
             // start 15 seconds timer 
             //yield return new WaitForSeconds(10);

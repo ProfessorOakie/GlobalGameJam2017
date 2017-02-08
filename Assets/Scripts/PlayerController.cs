@@ -47,7 +47,7 @@ public class PlayerController  : MonoBehaviour {
     {
         Debug.Log("Player Has Died");
         source.PlayOneShot(dieSound);
-
+        Monster.instance.gameObject.SetActive(false);
         deathCurtain.SetActive(true);
 
         //Destroy(gameObject);
@@ -97,7 +97,7 @@ public class PlayerController  : MonoBehaviour {
     {
         yield return new WaitForEndOfFrame();
         AudioClip clip = heartbeatSounds[Random.Range(0, heartbeatSounds.Length)];
-        source.PlayOneShot(clip, HeartbeatVolume);
+        source.PlayOneShot(clip, HeartbeatVolume + 0.4f);
         Monster.instance.SetTarget(transform.position, HeartbeatVolume/HeartbeatVolumeMax);
         SonarParent.instance.StartScan(transform.position, HeartbeatVolume/HeartbeatVolumeMax * 2.0f);
         //how long you wait between beats, scaled with volume

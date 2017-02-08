@@ -30,7 +30,7 @@ using UnityEngine;
         {
             audio = GetComponent<AudioSource>();
             int random = Random.Range(0, monsterIdle.Length);
-            audio.PlayOneShot(monsterIdle[random], 0.7f);
+            audio.PlayOneShot(monsterIdle[random], 0.9f);
             return monsterIdle[random].length;
         }
 
@@ -46,7 +46,7 @@ using UnityEngine;
         {
             audio = GetComponent<AudioSource>();
             int random = Random.Range(0, monsterPulse.Length);
-            audio.PlayOneShot(monsterPulse[random], 0.6f);
+            audio.PlayOneShot(monsterPulse[random], 0.8f);
             return monsterPulse[random].length;
     }
 
@@ -54,14 +54,14 @@ using UnityEngine;
         {
             audio = GetComponent<AudioSource>();
             int random = Random.Range(0, monsterWalk.Length);
-            audio.PlayOneShot(monsterWalk[random], 0.6f);
+            audio.PlayOneShot(monsterWalk[random], 2.2f);
             return monsterWalk[random].length;
     }
 
         public float CeilingBreak()
         {
             audio = GetComponent<AudioSource>();
-            audio.PlayOneShot(ceilingBreak, 0.9f);
+            audio.PlayOneShot(ceilingBreak, 2f);
             return ceilingBreak.length;
         }
     }
